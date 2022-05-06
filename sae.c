@@ -22,17 +22,46 @@ Polynome puissancePolynome(Polynome p, int n);
 Polynome deriveePolynome(Polynome p);
 Polynome racinePolynome(Polynome p);
 Polynome primitivePolynome(Polynome p);
+int supprimerPolynome(Polynome p);
 
 
 int main(){
     Polynome p = lecturePolynome();
     afficherPolynome(p);
 
-    Polynome p2 = deriveePolynome(p);
+    Polynome p2 = lecturePolynome();
     afficherPolynome(p2);
 
+    printf("Dérivee de p \n");
+    Polynome p8 = deriveePolynome(p);
+    afficherPolynome(p8);
+
+    printf("Primitive de p2 (p2 etant la derivee de p (ne marche pas totalement)) \n");
     Polynome p3 = primitivePolynome(p2);
     afficherPolynome(p3);
+
+    printf("Racine de p \n");
+    Polynome p4 = racinePolynome(p);
+    afficherPolynome(p4);
+    supprimerPolynome(p4);
+
+    printf("Somme de p et p2 \n");
+    Polynome p5 = sommePolynome(p, p2);
+    afficherPolynome(p5);
+    supprimerPolynome(p5);
+
+    printf("Produit de p et p2 \n");
+    Polynome p6 = produitPolynome(p, p2);
+    afficherPolynome(p6);
+    supprimerPolynome(p6);
+
+    printf("Puissance de p2 \n");
+    Polynome p7 = puissancePolynome(p2, 3);
+    afficherPolynome(p7);
+    supprimerPolynome(p7);
+
+
+
     return 0;
 
 }
@@ -146,4 +175,9 @@ Polynome primitivePolynome(Polynome p){
         p3.poly[i].den = p.poly[i+1].den;
     }
     return p3;
+}
+
+int supprimerPolynome(Polynome p){
+    free(p.poly);
+    return 0;
 }
