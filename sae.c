@@ -22,46 +22,18 @@ Polynome puissancePolynome(Polynome p, int n);
 Polynome deriveePolynome(Polynome p);
 Polynome racinePolynome(Polynome p);
 Polynome primitivePolynome(Polynome p);
-int supprimerPolynome(Polynome p);
 
 
 int main(){
+    // La fonction primitive ne marche pas totalement
     Polynome p = lecturePolynome();
     afficherPolynome(p);
 
-    Polynome p2 = lecturePolynome();
+    Polynome p2 = deriveePolynome(p);
     afficherPolynome(p2);
 
-    printf("Dérivee de p \n");
-    Polynome p8 = deriveePolynome(p);
-    afficherPolynome(p8);
-
-    printf("Primitive de p2 (p2 etant la derivee de p (ne marche pas totalement)) \n");
     Polynome p3 = primitivePolynome(p2);
     afficherPolynome(p3);
-
-    printf("Racine de p \n");
-    Polynome p4 = racinePolynome(p);
-    afficherPolynome(p4);
-    supprimerPolynome(p4);
-
-    printf("Somme de p et p2 \n");
-    Polynome p5 = sommePolynome(p, p2);
-    afficherPolynome(p5);
-    supprimerPolynome(p5);
-
-    printf("Produit de p et p2 \n");
-    Polynome p6 = produitPolynome(p, p2);
-    afficherPolynome(p6);
-    supprimerPolynome(p6);
-
-    printf("Puissance de p2 \n");
-    Polynome p7 = puissancePolynome(p2, 3);
-    afficherPolynome(p7);
-    supprimerPolynome(p7);
-
-
-
     return 0;
 
 }
@@ -105,21 +77,41 @@ void afficherPolynome(Polynome p){
     printf("\n");
 }
 
+
 Polynome sommePolynome(Polynome p1, Polynome p2){
-    Polynome p3;
-    p3.degre = p1.degre;
-    p3.poly = (Rationnel*)malloc((p1.degre+1)*sizeof(Rationnel));
-    for(int i=0;i<=p1.degre;i++){
-        p3.poly[i].num = p1.poly[i].num + p2.poly[i].num;
-        p3.poly[i].den = p1.poly[i].den + p2.poly[i].den;
+Polynome p3;
+
+
+    if(p1.degre > p2.degre) {
+        p3.poly = p1.degre;
+    }else{
+        p3.poly = p2.degre;
+    }
+
+
+    p3.poly = (Rationnel*)malloc((degre+1)*sizeof(Rationnel));
+
+    for (int i = 0; i <= p3.degre; i++) {
+        if (i>p1.degre){
+            p3.poly[i].num = 0 p2.poly[i].den + p2.poly[i].num * 1;
+            p3.poly[i].den = 1 * p2.poly[i].den;
+        } 
+        else if (i>p2.degre){
+            p3.poly[i].num = p1.poly[i].num * 1 + 0 * p1.poly[i].den;
+            p3.poly[i].den = p1.poly[i].den * 1;
+        } else {
+            p3.poly[i].num = p1.poly[i].num * p2.poly[i].den + p2.poly[i].num * p1.poly[i].den;
+            p3.poly[i].den = p1.poly[i].den * p2.poly[i].den;
+        }
     }
     return p3;
+
 }
 
 Polynome produitPolynome(Polynome p1, Polynome p2){
     Polynome p3;
     p3.degre = p1.degre + p2.degre;
-    p3.poly = (Rationnel*)malloc((p1.degre+p2.degre+1)*sizeof(Rationnel));
+    p3.poly = (Rationnel*)malloc((degre+1)*sizeof(Rationnel));
     for(int i=0;i<=p1.degre;i++){
         for(int j=0;j<=p2.degre;j++){
             p3.poly[i+j].num = p1.poly[i].num * p2.poly[j].num;
@@ -128,6 +120,7 @@ Polynome produitPolynome(Polynome p1, Polynome p2){
     }
     return p3;
 }
+
 
 
 
@@ -177,7 +170,3 @@ Polynome primitivePolynome(Polynome p){
     return p3;
 }
 
-int supprimerPolynome(Polynome p){
-    free(p.poly);
-    return 0;
-}
