@@ -26,7 +26,7 @@ typedef struct{
 //
 //      -- Faire un "menu" pour que l'utilisateur puisse choisir entre les differentes fonctions
 //
-//
+//      -- Verifier les entres de l'utilisateur pour s'assurer qu'il entre bien des valeurs attendues
 //
 
 Polynome lecturePolynome();
@@ -59,12 +59,12 @@ int main(){
     Polynome p3 = deriveePolynome(p2);
     afficherPolynome(p3);
 
-    printf("Primitive de la derivee de P2 : ");
-    Polynome p4 = primitivePolynome(p3);
-    afficherPolynome(p4);
+    // printf("Primitive de la derivee de P2 : ");
+    // Polynome p4 = primitivePolynome(p3);
+    // afficherPolynome(p4);
 
     supprimerPolynome(p3);
-    supprimerPolynome(p4);
+    // supprimerPolynome(p4);
 
     printf("Somme de p1 et p2 : ");
     Polynome p5 = sommePolynome(p1, p2);
@@ -238,21 +238,22 @@ Polynome racinePolynome(Polynome p){
     return p3;
 }
 
-Polynome primitivePolynome(Polynome p){
-    Polynome p3;
-    p3.degre = p.degre - 1;
-    p3.poly = (Rationnel*)malloc((p.degre-1)*sizeof(Rationnel));
-    for(int i=0;i<p.degre;i++){
-        if(i == 0){
-            p3.poly[i].num = (p.poly[i+1].num);
-            p3.poly[i].den = (p.poly[i+1].den);
-        }else
-        p3.poly[i].num = (p.poly[i+1].num)/(i+1);
-        p3.poly[i].den = (p.poly[i+1].den)/(i+1);
+// Polynome primitivePolynome(Polynome p){  ------> Ne fonctionne pas encore
+//     Polynome p3;
+//     p3.degre = p.degre - 1;
+//     p3.poly = (Rationnel*)malloc((p.degre-1)*sizeof(Rationnel));
+//     for(int i=0;i<p.degre;i++){
+//         if(i == 0){
+//             p3.poly[i].num = (p.poly[i].num);
+//             p3.poly[i].den = (p.poly[i+1].den);
+//         }else{
+//         p3.poly[i].num = (p.poly[i].num)/(i);
+//         p3.poly[i].den = (p.poly[i].den)/(i);
+//         }
     
-    }
-    return p3;
-}
+//     }
+//     return p3;
+// }
 
 int supprimerPolynome(Polynome p){
     free(p.poly);
